@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const ContinentName = styled.div`
-  color: #fff;
+  color: ${props => props.theme.app.white};
   font-size: 1.4rem;
   font-weight: bold;
   position: absolute;

@@ -32,7 +32,7 @@ const useHttp = (url, query) => {
             }
         };
         fetchRequest();
-    }, [url]);
+    }, [url, query]);
 
     return {
         isLoading: httpState.loading,

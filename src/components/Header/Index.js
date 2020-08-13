@@ -5,13 +5,13 @@ import NavItem from './NavItem';
 import HeaderLink from './HeaderLink';
 
 const Wrapper = styled.header`
-    background-color: #5d1dd4;
+    background-color: ${props => props.theme.palette.primary.dark};   
     min-height: 6.5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: white;
+    color: ${props => props.theme.app.white};
 `;
 
 const Header = () => (

@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect, useCallback } from 'react';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 import { MyContext } from '../../App';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import useHttp from '../../hooks/http';
@@ -10,7 +10,7 @@ import Wrapper from './Wrapper';
 const Continent = () => {
     const { localState, setLocalState } = useContext(MyContext);
     const [countries, setCountries] = useState([]);
-    const history = useHistory();
+    // const history = useHistory();
     const continentSelected = localStorage.getItem('continentSelected') ? JSON.parse(localStorage.getItem('continentSelected')) : localState.continentSelected;
     const [countrySelected, setCountrySelected] = useState('');
 
@@ -33,19 +33,17 @@ const Continent = () => {
         }
     }, [data]);
 
-    const onCountrySelect = selectedCountry => {
-        if (selectedCountry) {
-            setCountrySelected(selectedCountry.name);
-            setLocalState({
-                ...localState,
-                countrySelected: selectedCountry.name,
-            });
-            localStorage.setItem('countrySelected', JSON.stringify(selectedCountry.name));
-        } else {
-            setCountrySelected('');
-            //TODO: update or empty city list on change
-        }
-    };
+    const onCountrySelect = useCallback(selectedCountry => {
+        const countrySelected = selectedCountry ? selectedCountry.name : '';
+
+        setCountrySelected(countrySelected);
+        setLocalState({
+            ...localState,
+            countrySelected: countrySelected,
+        });
+        localStorage.setItem('countrySelected', JSON.stringify(countrySelected));
+
+    }, [localState, setLocalState]);
 
     useEffect(() => {
         if (data !== null) {
@@ -63,7 +61,7 @@ const Continent = () => {
                 </div>
             }
             {!isLoading && countries.length > 0 && <SelectMenu type='country' list={countries} onSelectChange={onCountrySelect} />}
-            {!isLoading && countrySelected && <SelectMenuCities />}
+            {!isLoading && countrySelected && <SelectMenuCities countrySelected={countrySelected} />}
         </Wrapper>
     );
 }

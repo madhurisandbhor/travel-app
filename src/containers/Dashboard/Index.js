@@ -53,7 +53,7 @@ const Dashboard = () => {
         });
         history.push(`/continents/${continentSelected}`);
         localStorage.setItem('continentSelected', JSON.stringify(continentSelected));
-    }, []);
+    }, [history, localState, setLocalState]);
 
     useEffect(() => {
         if (data !== null) {

@@ -4,6 +4,7 @@ import {
   ThemeProvider as MuiThemeProvider,
   StylesProvider,
 } from '@material-ui/styles';
+import { ThemeProvider } from 'styled-components';
 import theme from './Theme';
 import Header from './components/Header/Index';
 import NotFound from './components/NotFoundPage';
@@ -21,22 +22,26 @@ function App() {
   //TODO: restrict routes
   const [localState, setLocalState] = useState(initState);
   return (
-    <MuiThemeProvider theme={theme}>
-      <MyContext.Provider value={{ localState, setLocalState }}>
-        <Router>
-          <div className="app">
-            <Header />
-            <div className="app-body">
-              <Switch>
-                <Route exact path='/' component={Dashboard} />
-                <Route path='/continents/:continent' component={Continent} />
-                <Route path='' component={NotFound} />
-              </Switch>
-            </div>
-          </div>
-        </Router>
-      </MyContext.Provider>
-    </MuiThemeProvider>
+    <StylesProvider injectFirst>
+      <MuiThemeProvider theme={theme}>
+        <ThemeProvider theme={theme}>
+          <MyContext.Provider value={{ localState, setLocalState }}>
+            <Router>
+              <div className="app">
+                <Header />
+                <div className="app-body">
+                  <Switch>
+                    <Route exact path='/' component={Dashboard} />
+                    <Route path='/continents/:continent' component={Continent} />
+                    <Route path='' component={NotFound} />
+                  </Switch>
+                </div>
+              </div>
+            </Router>
+          </MyContext.Provider>
+        </ThemeProvider>
+      </MuiThemeProvider>
+    </StylesProvider>
   );
 }
 

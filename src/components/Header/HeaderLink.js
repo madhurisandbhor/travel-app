@@ -10,5 +10,5 @@ export default styled(NavLink)`
   outline: 0;
   font-size: 2.4rem;
   font-weight: bold;
-  color: white;
+  color: ${props => props.theme.app.white};
 `;

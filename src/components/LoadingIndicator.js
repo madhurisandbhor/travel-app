@@ -5,9 +5,13 @@ const Loader = styled.div`
    text-align :center;
 `;
 
+const Circle = styled.i`
+   color: ${props => props.theme.palette.primary.main};
+`;
+
 const LoadingIndicator = () => (
     <Loader>
-        <i className="fas fa-circle-notch fa-2x fa-spin" style={{ color: '#ff4500' }}></i>
+        <Circle className="fas fa-circle-notch fa-2x fa-spin"></Circle>
     </Loader>
 );
 
