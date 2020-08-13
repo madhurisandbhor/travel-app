@@ -17,6 +17,7 @@ function App() {
   const initState = {
     continentSelected: '',
     countrySelected: '',
+    citySelected: '',
   };
 
   //TODO: restrict routes

@@ -48,10 +48,11 @@ const Dashboard = () => {
 
     const getCountinentInfo = useCallback(continentSelected => {
         setLocalState({
-            ...localState,
             continentSelected: continentSelected,
+            countrySelected: '',
+            citySelected: '',
         });
-        history.push(`/continents/${continentSelected}`);
+        history.push(`/continents/${continentSelected.name}`);
         localStorage.setItem('continentSelected', JSON.stringify(continentSelected));
     }, [history, localState, setLocalState]);
 
@@ -72,7 +73,7 @@ const Dashboard = () => {
                 {!isLoading &&
                     <ContinentList>
                         {continentsList.length > 0 && continentsList.map(item =>
-                            <Card key={item.id} onClick={() => getCountinentInfo(item.name)}>
+                            <Card key={item.id} onClick={() => getCountinentInfo(item)}>
                                 <ContinentWrapper>
                                     <ImageContainer image={asia} />
                                     <ContinentName>{item.name}</ContinentName>

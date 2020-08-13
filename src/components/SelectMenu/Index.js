@@ -7,6 +7,7 @@ import { withStyles } from '@material-ui/core/styles';
 const AutocompleteWrapper = withStyles({
     root: {
         fontSize: '1.6rem',
+        marginBottom: '1.2rem',
     },
     option: {
         fontSize: 15,
@@ -43,4 +44,4 @@ SelectMenu.propTypes = {
     onSelectChange: PropTypes.func.isRequired,
 };
 
-export default SelectMenu;
+export default React.memo(SelectMenu);
