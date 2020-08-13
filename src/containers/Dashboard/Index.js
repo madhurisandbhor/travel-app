@@ -10,9 +10,6 @@ import { MyContext } from '../../App';
 import useHttp from '../../hooks/http';
 
 const Wrapper = styled.div`
-`;
-
-const Section = styled.div`
   width: 80%;
   margin: 0 auto;
 `;
@@ -23,8 +20,8 @@ const ContinentList = styled.div`
 `;
 
 const ContinentWrapper = styled.div`
-height: 100%;
-position: relative;
+    height: 100%;
+    position: relative;
 `;
 
 const Dashboard = () => {
@@ -50,12 +47,8 @@ const Dashboard = () => {
         setLocalState({
             ...localState,
             continentSelected: continentSelected,
-            countrySelected: '',
-            citySelected: '',
-            citiesLocation: '',
         });
         history.push(`/continents/${continentSelected.name}`);
-        localStorage.setItem('continentSelected', JSON.stringify(continentSelected));
     }, [history, localState, setLocalState]);
 
     useEffect(() => {
@@ -66,25 +59,23 @@ const Dashboard = () => {
 
     return (
         <Wrapper>
-            <Section>
-                <h4 style={{ margin: '2rem 0', textAlign: 'center' }}>
-                    Please choose a continent to travel
+            <h4 style={{ margin: '2rem 0', textAlign: 'center' }}>
+                Please choose a continent to travel
                 </h4>
-                {isLoading && <LoadingIndicator />}
-                {error && <div>{error}</div>}
-                {!isLoading &&
-                    <ContinentList>
-                        {continentsList.length > 0 && continentsList.map(item =>
-                            <Card key={item.id} onClick={() => getCountinentInfo(item)}>
-                                <ContinentWrapper>
-                                    <ImageContainer image={asia} />
-                                    <ContinentName>{item.name}</ContinentName>
-                                </ContinentWrapper>
-                            </Card>
-                        )}
-                    </ContinentList>
-                }
-            </Section>
+            {isLoading && <LoadingIndicator />}
+            {error && <div>{error}</div>}
+            {!isLoading &&
+                <ContinentList>
+                    {continentsList.length > 0 && continentsList.map(item =>
+                        <Card key={item.id} onClick={() => getCountinentInfo(item)}>
+                            <ContinentWrapper>
+                                <ImageContainer image={asia} />
+                                <ContinentName>{item.name}</ContinentName>
+                            </ContinentWrapper>
+                        </Card>
+                    )}
+                </ContinentList>
+            }
         </Wrapper>
     );
 };

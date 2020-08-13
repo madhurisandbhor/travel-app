@@ -16,12 +16,8 @@ export const MyContext = createContext();
 function App() {
   const initState = {
     continentSelected: '',
-    countrySelected: '',
-    citySelected: '',
-    citiesLocation:'',
   };
 
-  //TODO: restrict routes
   const [localState, setLocalState] = useState(initState);
   return (
     <StylesProvider injectFirst>

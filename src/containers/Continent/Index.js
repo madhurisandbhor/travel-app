@@ -40,9 +40,9 @@ const MapSection = styled.div`
 
 
 const Continent = () => {
-    const { localState, setLocalState } = useContext(MyContext);
+    const { localState } = useContext(MyContext);
     const [countries, setCountries] = useState([]);
-    const continentSelected = localStorage.getItem('continentSelected') ? JSON.parse(localStorage.getItem('continentSelected')) : localState.continentSelected;
+    const continentSelected = localState.continentSelected ? localState.continentSelected : {};
     const [countrySelected, setCountrySelected] = useState({});
     const [citySelected, setCitySelected] = useState({});
 
@@ -75,13 +75,7 @@ const Continent = () => {
         const countrySelected = selectedCountry ? selectedCountry : {};
         setCountrySelected(countrySelected);
         setCitySelected({});
-        setLocalState({
-            ...localState,
-            countrySelected: countrySelected,
-        });
-        localStorage.setItem('countrySelected', JSON.stringify(countrySelected));
-
-    }, [localState, setLocalState]);
+    }, []);
 
     const onSetCurrentCity = useCallback(currentCity => {
         setCitySelected(currentCity);
