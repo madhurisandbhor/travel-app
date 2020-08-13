@@ -24,8 +24,11 @@ const FlexWrapper = styled.div`
 `;
 
 const CountryInfoSection = ({ countryInfo }) => {
-    // const { localState } = useContext(MyContext);
-    // const countrySelected = localState.countrySelected ? localState.countrySelected : '';
+    const displayMultipleValue = data => {
+        return (data && data.map(item =>
+            item.name
+        ).join(', '));
+    };
 
     return (
         <Wrapper>
@@ -35,15 +38,11 @@ const CountryInfoSection = ({ countryInfo }) => {
                 <Text>Population: {countryInfo.population}</Text>
                 <FlexWrapper>
                     <span>Currencies: </span>
-                    {countryInfo.currencies && countryInfo.currencies.map(item =>
-                        item.name
-                    ).join(',')}
+                    {displayMultipleValue(countryInfo.currencies)}
                 </FlexWrapper>
                 <FlexWrapper>
                     <span>Languages: </span>
-                    {countryInfo.languages && countryInfo.languages.map(item =>
-                        item.name
-                    ).join(',')}
+                    {displayMultipleValue(countryInfo.languages)}
                 </FlexWrapper>
             </>
         </Wrapper>
