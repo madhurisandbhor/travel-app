@@ -7,14 +7,14 @@ import SelectMenu from '../../components/SelectMenu/Index';
 import SelectMenuCities from './SelectMenuCities';
 import Wrapper from './Wrapper';
 import ContinentInfoSection from './ContinentInfoSection';
-import CountryInfoSection from './CountryInfoSection';
+import MapContainer from './Map';
 
 const Container = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     margin: 2rem 0;
-    height: 30rem;
+    height: auto;
 `;
 
 const Info = styled.div`
@@ -43,7 +43,8 @@ const Continent = () => {
     const { localState, setLocalState } = useContext(MyContext);
     const [countries, setCountries] = useState([]);
     const continentSelected = localStorage.getItem('continentSelected') ? JSON.parse(localStorage.getItem('continentSelected')) : localState.continentSelected;
-    const [countrySelected, setCountrySelected] = useState();
+    const [countrySelected, setCountrySelected] = useState({});
+    const [citySelected, setCitySelected] = useState({});
 
     const url = 'https://api.everbase.co/graphql?apikey=your_key';
     const query = `{
@@ -54,6 +55,10 @@ const Continent = () => {
             countries {
                 id
                 name
+                location {
+                    lat
+                    long
+                  }
             }
         }
     }`;
@@ -67,34 +72,51 @@ const Continent = () => {
     }, [data]);
 
     const onCountrySelect = useCallback(selectedCountry => {
-        setCountrySelected(selectedCountry);
+        const countrySelected = selectedCountry ? selectedCountry : {};
+        setCountrySelected(countrySelected);
+        setCitySelected({});
         setLocalState({
             ...localState,
-            countrySelected: selectedCountry,
+            countrySelected: countrySelected,
         });
-        localStorage.setItem('countrySelected', JSON.stringify(selectedCountry));
+        localStorage.setItem('countrySelected', JSON.stringify(countrySelected));
 
     }, [localState, setLocalState]);
+
+    const onSetCurrentCity = useCallback(currentCity => {
+        setCitySelected(currentCity);
+    }, []);
 
     return (
         <Wrapper>
             {isLoading && <LoadingIndicator />}
             {error && <div className="no-result-text">No result!!!</div>}
-            <Container>
-                <Info>
-                    <ContinentInfoSection continentSelected={continentSelected} />
-                    {!isLoading && countries.length > 0 &&
-                        <InfoText>
-                            Please choose your destination to explore
+            {!isLoading &&
+                <Container>
+                    <Info>
+                        <ContinentInfoSection continentSelected={continentSelected} />
+                        {countries.length > 0 &&
+                            <>
+                                <InfoText>
+                                    Please choose your destination to explore
                         </InfoText>
+                                <SelectMenu type='country' list={countries} onSelectChange={onCountrySelect} />
+                                {Object.keys(countrySelected).length !== 0 &&
+                                    < SelectMenuCities countrySelected={countrySelected} setCurrentCity={onSetCurrentCity} />
+                                }
+                            </>
+                        }
+                    </Info>
+                    {countries.length > 0 && <MapSection>
+                        <MapContainer countries={countries} countrySelected={countrySelected} citySelected={citySelected} />
+                        Click on red marker on map to add city to your travel plan.
+                    </MapSection>}
+                    {
+                        countries.length === 0 &&
+                        <MapSection>Map is temporarily not available</MapSection>
                     }
-                    {!isLoading && countries.length > 0 && <SelectMenu type='country' list={countries} onSelectChange={onCountrySelect} />}
-                    {!isLoading && countrySelected &&
-                        <SelectMenuCities countrySelected={countrySelected} />
-                    }
-                </Info>
-                <MapSection>Map will be loaded shortly</MapSection>
-            </Container>
+                </Container>
+            }
         </Wrapper>
     );
 }

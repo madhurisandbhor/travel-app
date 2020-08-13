@@ -1,5 +1,4 @@
-import React, { useContext, useEffect } from 'react';
-import { MyContext } from '../../App';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
@@ -24,27 +23,23 @@ const FlexWrapper = styled.div`
 `;
 
 const CountryInfoSection = ({ countryInfo }) => {
-    const displayMultipleValue = data => {
-        return (data && data.map(item =>
-            item.name
-        ).join(', '));
-    };
+    const displayMultipleValue = useCallback(
+        (data) => data &&
+            data.map(item => item.name).join(', '), []);
 
     return (
         <Wrapper>
-            <>
-                <Text>Country Selected: {countryInfo.name}</Text>
-                <Text>Capital: {countryInfo.capital ? countryInfo.capital.name : 'Not available'}</Text>
-                <Text>Population: {countryInfo.population}</Text>
-                <FlexWrapper>
-                    <span>Currencies: </span>
-                    {displayMultipleValue(countryInfo.currencies)}
-                </FlexWrapper>
-                <FlexWrapper>
-                    <span>Languages: </span>
-                    {displayMultipleValue(countryInfo.languages)}
-                </FlexWrapper>
-            </>
+            <Text>Country Selected: {countryInfo.name}</Text>
+            <Text>Capital: {countryInfo.capital ? countryInfo.capital.name : 'Not available'}</Text>
+            <Text>Population: {countryInfo.population}</Text>
+            <FlexWrapper>
+                <span>Currencies: </span>
+                {displayMultipleValue(countryInfo.currencies)}
+            </FlexWrapper>
+            <FlexWrapper>
+                <span>Languages: </span>
+                {displayMultipleValue(countryInfo.languages)}
+            </FlexWrapper>
         </Wrapper>
     );
 }

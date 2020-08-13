@@ -1,18 +1,15 @@
-import React, { useContext, useState, useEffect, useCallback } from 'react';
-import { MyContext } from '../../App';
+import React, { useState, useEffect, useCallback } from 'react';
+import PropTypes from 'prop-types';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import useHttp from '../../hooks/http';
 import SelectMenu from '../../components/SelectMenu/Index';
 import CountryInfoSection from './CountryInfoSection';
 import CityInfoSection from './CityInfoSection';
 
-const Continent = ({ countrySelected }) => {
-    const { localState, setLocalState } = useContext(MyContext);
+const SelectMenuCities = ({ countrySelected, setCurrentCity }) => {
     const [cities, setCities] = useState([]);
-    // const countrySelected = localStorage.getItem('countrySelected') ? JSON.parse(localStorage.getItem('countrySelected')) : localState.countrySelected;
     const [countryInfo, setCountryInfo] = useState({});
     const [cityInfo, setCityInfo] = useState({});
-
 
     const url = 'https://api.everbase.co/graphql?apikey=your_key';
     const query = `{
@@ -55,26 +52,29 @@ const Continent = ({ countrySelected }) => {
 
     const onCitySelect = useCallback(selectedCity => {
         const citySelected = selectedCity ? selectedCity : {};
-
         setCityInfo(citySelected);
-        setLocalState({
-            ...localState,
-            citySelected: citySelected,
-        });
-        localStorage.setItem('citySelected', JSON.stringify(citySelected));
-
-    }, [localState, setLocalState]);
+        setCurrentCity(citySelected);
+    }, [setCurrentCity]);
 
     return (
         <>
             {isLoading && <LoadingIndicator />}
             {error && <div className="no-result-text">No result!!!</div>}
-            {!isLoading && Object.keys(countryInfo).length !== 0 && <CountryInfoSection countryInfo={countryInfo}></CountryInfoSection>}
-            {!isLoading && cities.length > 0 && <SelectMenu type='city' list={cities} onSelectChange={onCitySelect} />}
-            {!isLoading && cities.length === 0 && <div style={{ margin: '1rem 0' }}>No cities available</div>}
-            {!isLoading && Object.keys(cityInfo).length !== 0 && <CityInfoSection cityInfo={cityInfo} />}
+            {!isLoading &&
+                <>
+                    {Object.keys(countryInfo).length !== 0 && <CountryInfoSection countryInfo={countryInfo}></CountryInfoSection>}
+                    {cities.length > 0 && <SelectMenu type='city' list={cities} onSelectChange={onCitySelect} />}
+                    {cities.length === 0 && <div style={{ margin: '1rem 0' }}>No cities available</div>}
+                    {Object.keys(cityInfo).length !== 0 && <CityInfoSection cityInfo={cityInfo} />}
+                </>
+            }
         </>
     );
 }
 
-export default React.memo(Continent);
+SelectMenuCities.propTypes = {
+    countrySelected: PropTypes.object.isRequired,
+    setCurrentCity: PropTypes.func.isRequired,
+}
+
+export default React.memo(SelectMenuCities);

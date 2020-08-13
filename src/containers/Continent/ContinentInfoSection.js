@@ -1,5 +1,4 @@
-import React, { useContext, useEffect } from 'react';
-import { MyContext } from '../../App';
+import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
@@ -17,16 +16,14 @@ const Text = styled.div`
    }
 `;
 
-const ContinentInfoSection = ({ continentSelected }) => {
-    return (
-        <Wrapper>
-            <Text>Geographical Information</Text>
-            <Text>Continent : {continentSelected.name}</Text>
-            <Text>Population: {continentSelected.population}</Text>
-            <Text>Countries : {continentSelected.countries.length}</Text>
-        </Wrapper>
-    );
-}
+const ContinentInfoSection = ({ continentSelected }) => (
+    <Wrapper>
+        <Text>Geographical Information</Text>
+        <Text>Continent : {continentSelected.name}</Text>
+        <Text>Population: {continentSelected.population}</Text>
+        <Text>Countries : {continentSelected.countries.length}</Text>
+    </Wrapper>
+);
 
 ContinentInfoSection.propTypes = {
     continentSelected: PropTypes.object.isRequired,

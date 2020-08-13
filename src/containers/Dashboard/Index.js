@@ -48,9 +48,11 @@ const Dashboard = () => {
 
     const getCountinentInfo = useCallback(continentSelected => {
         setLocalState({
+            ...localState,
             continentSelected: continentSelected,
             countrySelected: '',
             citySelected: '',
+            citiesLocation: '',
         });
         history.push(`/continents/${continentSelected.name}`);
         localStorage.setItem('continentSelected', JSON.stringify(continentSelected));
@@ -66,7 +68,7 @@ const Dashboard = () => {
         <Wrapper>
             <Section>
                 <h4 style={{ margin: '2rem 0', textAlign: 'center' }}>
-                    Please choose the continent to travel
+                    Please choose a continent to travel
                 </h4>
                 {isLoading && <LoadingIndicator />}
                 {error && <div>{error}</div>}

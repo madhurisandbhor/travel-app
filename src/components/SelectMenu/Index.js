@@ -8,12 +8,13 @@ const AutocompleteWrapper = withStyles({
     root: {
         fontSize: '1.6rem',
         marginBottom: '1.2rem',
+        width: '30rem',
     },
     option: {
-        fontSize: 15,
+        fontSize: '1.5rem',
         '& > span': {
-            marginRight: 10,
-            fontSize: 18,
+            marginRight: '1rem',
+            fontSize: '1.8rem',
         },
     },
 })(Autocomplete);
@@ -24,7 +25,6 @@ const SelectMenu = ({ type, list, onSelectChange }) => {
     return (
         <AutocompleteWrapper
             id="select-menu"
-            style={{ width: 300 }}
             options={list}
             autoHighlight
             getOptionLabel={(option) => option.name}
@@ -40,6 +40,7 @@ const SelectMenu = ({ type, list, onSelectChange }) => {
 }
 
 SelectMenu.propTypes = {
+    type: PropTypes.string.isRequired,
     list: PropTypes.array.isRequired,
     onSelectChange: PropTypes.func.isRequired,
 };

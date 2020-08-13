@@ -18,6 +18,7 @@ function App() {
     continentSelected: '',
     countrySelected: '',
     citySelected: '',
+    citiesLocation:'',
   };
 
   //TODO: restrict routes
