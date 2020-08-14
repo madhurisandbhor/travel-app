@@ -6,7 +6,7 @@ import {
 } from '@material-ui/styles';
 import { ThemeProvider } from 'styled-components';
 import theme from './Theme';
-import Header from './components/Header/Index';
+import AppHeader from './containers/AppHeader/Index';
 import NotFound from './components/NotFoundPage';
 import Dashboard from './containers/Dashboard/Index';
 import Continent from './containers/Continent/Index';
@@ -17,6 +17,7 @@ function App() {
   const initState = {
     continentSelected: '',
     citiesAddedByUser: [],
+    notificationToggle: false,
   };
 
   const [localState, setLocalState] = useState(initState);
@@ -27,7 +28,7 @@ function App() {
           <MyContext.Provider value={{ localState, setLocalState }}>
             <Router>
               <div className="app">
-                <Header />
+                <AppHeader />
                 <div className="app-body">
                   <Switch>
                     <Route exact path='/' component={Dashboard} />

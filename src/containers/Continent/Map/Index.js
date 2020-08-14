@@ -49,9 +49,9 @@ const MapContainer = ({ countries, countrySelected, citySelected }) => {
             }]);
         } else {
             setZoom(3);
-            countries.map(item => {
+            countries.forEach(item => {
                 const isCityAdded = citiesAddedByUser.some(city => city.name === item.name);
-                
+
                 setMarkers(current => [...current, {
                     lat: item.location ? item.location.lat : 0,
                     lng: item.location ? item.location.long : 0,
@@ -64,17 +64,6 @@ const MapContainer = ({ countries, countrySelected, citySelected }) => {
         }
 
     }, [countries, countrySelected, citySelected, localState]);
-
-
-    useEffect(() => {
-        // restore local state on refresh
-        setLocalState({
-            ...localState,
-            citiesAddedByUser: JSON.parse(localStorage.getItem('citiesAddedByUser'))
-        });
-        //TODO: improve this
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     const onMarkerClick = marker => {
         setSelected(marker);

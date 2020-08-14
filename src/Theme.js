@@ -27,7 +27,20 @@ const theme = createMuiTheme({
             input: {
                 fontSize: '1.4rem',
             }
-        }
+        },
+        MuiSvgIcon: {
+            root: {
+                fontSize: '2.4rem',
+            }
+        },
+        MuiTypography: {
+            body1: {
+                fontSize: '1.4rem',
+            },
+            body2: {
+                fontSize: '1.2rem',
+            }
+        },
     },
 });
 

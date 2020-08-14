@@ -40,7 +40,7 @@ const MapSection = styled.div`
 
 
 const Continent = () => {
-    const { localState } = useContext(MyContext);
+    const { localState, setLocalState } = useContext(MyContext);
     const [countries, setCountries] = useState([]);
     const continentSelected = localStorage.getItem('continentSelected') ? JSON.parse(localStorage.getItem('continentSelected')) : localState.continentSelected;
     const [countrySelected, setCountrySelected] = useState({});
@@ -66,11 +66,30 @@ const Continent = () => {
 
     const { isLoading, data, error } = useHttp(url, query);
 
+    // restore local state on refresh
+    // setLocalState({
+    //     ...localState,
+    //     citiesAddedByUser: JSON.parse(localStorage.getItem('citiesAddedByUser'))
+    // });
+
     useEffect(() => {
         if (data !== null) {
             setCountries(data.continents[0].countries);
         }
+
+        // restore local state on refresh
+        // setLocalState({
+        //     ...localState,
+        //     citiesAddedByUser: JSON.parse(localStorage.getItem('citiesAddedByUser'))
+        // });
     }, [data]);
+
+    useEffect(() => {
+        console.log('continent mounted');
+        return () => {
+            console.log('continent unmounted');
+        }
+    }, [])
 
     const onCountrySelect = useCallback(selectedCountry => {
         const countrySelected = selectedCountry ? selectedCountry : {};
