@@ -23,6 +23,7 @@ const MapContainer = ({ countries, countrySelected, citySelected }) => {
 
     useEffect(() => {
         const selectedLocation = Object.keys(citySelected).length !== 0 ? citySelected : countrySelected;
+        const citiesAddedByUser = localStorage.getItem('citiesAddedByUser') ? JSON.parse(localStorage.getItem('citiesAddedByUser')) : localState.citiesAddedByUser;
 
         if (Object.keys(citySelected).length !== 0 || Object.keys(countrySelected).length !== 0) {
             if (Object.keys(citySelected).length !== 0) {
@@ -36,8 +37,7 @@ const MapContainer = ({ countries, countrySelected, citySelected }) => {
                 lng: selectedLocation.location.long
             })
 
-            const citiesAddedByUser = localStorage.getItem('citiesAddedByUser') ? JSON.parse(localStorage.getItem('citiesAddedByUser')) : localState.citiesAddedByUser;
-            const cityAdded = citiesAddedByUser.find(city => city.name === selectedLocation.name);
+            const isCityAdded = citiesAddedByUser.some(city => city.name === selectedLocation.name);
 
             setMarkers([{
                 lat: selectedLocation.location ? selectedLocation.location.lat : 0,
@@ -45,21 +45,20 @@ const MapContainer = ({ countries, countrySelected, citySelected }) => {
                 id: selectedLocation.id,
                 name: selectedLocation.name,
                 population: selectedLocation.population,
-                locationSelected: cityAdded,
+                locationSelected: isCityAdded,
             }]);
         } else {
             setZoom(3);
             countries.map(item => {
-                const citiesAddedByUser = localStorage.getItem('citiesAddedByUser') ? JSON.parse(localStorage.getItem('citiesAddedByUser')) : localState.citiesAddedByUser;
-                const cityAdded = citiesAddedByUser.some(city => city.name === item.name);
-
+                const isCityAdded = citiesAddedByUser.some(city => city.name === item.name);
+                
                 setMarkers(current => [...current, {
                     lat: item.location ? item.location.lat : 0,
                     lng: item.location ? item.location.long : 0,
                     id: item.id,
                     name: item.name,
                     population: item.population,
-                    locationSelected: cityAdded,
+                    locationSelected: isCityAdded,
                 }]);
             });
         }

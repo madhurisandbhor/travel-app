@@ -63,13 +63,22 @@ const MapInfoWindow = ({ selected, onCloseClick }) => {
     const { localState, setLocalState } = useContext(MyContext);
     const [isCityAdded, setIsCityAdded] = useState(false);
 
-    const onAddCity = selectedCity => {
-        const updatedCity = { ...selectedCity, locationSelected: true }
+    const onAddCity = () => {
+        const updatedCity = { ...selected, locationSelected: true }
         setLocalState({
             ...localState,
             citiesAddedByUser: [...localState.citiesAddedByUser, updatedCity]
         });
     };
+
+    const onDelete = () => {
+        let localStateArray = [...localState.citiesAddedByUser];
+        localStateArray = localStateArray.filter(city => city.name !== selected.name);
+        setLocalState({
+            ...localState,
+            citiesAddedByUser: localStateArray
+        });
+    }
 
     useEffect(() => {
         // update local storage after adding city
@@ -77,9 +86,9 @@ const MapInfoWindow = ({ selected, onCloseClick }) => {
     }, [localState]);
 
     useEffect(() => {
-        // after adding update check icon and hide add icon
+        // after adding update check icon and add/delete button
         const citiesAddedByUser = localStorage.getItem('citiesAddedByUser') ? JSON.parse(localStorage.getItem('citiesAddedByUser')) : localState.citiesAddedByUser;
-        const cityAdded = citiesAddedByUser.some(city => (city.name === selected.name) || selected.locationSelected)
+        const cityAdded = citiesAddedByUser.some(city => (city.name === selected.name));
         setIsCityAdded(cityAdded);
     }, [selected, setIsCityAdded, localState]);
 
@@ -90,14 +99,14 @@ const MapInfoWindow = ({ selected, onCloseClick }) => {
             <InfoBox>
                 <City>{selected.name}</City>
                 <span>Population : {selected.population}</span>
-                {!isCityAdded && <Button aria-label="add city" disabled={isCityAdded} onClick={(event) => onAddCity(selected, event)}>
+                {!isCityAdded && <Button aria-label="add city" onClick={onAddCity}>
                     <AddIcon />
                 </Button>}
                 {isCityAdded &&
                     <MoreOptions>
                         <span>City is added</span>
                         <CheckIcon />
-                        <Button aria-label="delete city">
+                        <Button aria-label="delete city" onClick={onDelete}>
                             <CancelIcon />
                         </Button>
                     </MoreOptions>
