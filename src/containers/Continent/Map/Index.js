@@ -1,19 +1,9 @@
-import React, { useState, useEffect } from 'react'
-import { GoogleMap, LoadScript, Marker, InfoWindow } from '@react-google-maps/api';
+import React, { useState, useEffect, useCallback, useContext } from 'react'
+import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import MapInfoWindow from './MapInfoWindow';
+import { MyContext } from '../../../App';
 
-const InfoBox = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    align-content: space-between;
-    padding: .8rem;
-`;
-
-const City = styled.b`
-    margin-bottom: .5rem;
-`;
 
 const containerStyle = {
     width: '45vw',
@@ -21,9 +11,11 @@ const containerStyle = {
 };
 
 const MapContainer = ({ countries, countrySelected, citySelected }) => {
+    const { localState, setLocalState } = useContext(MyContext);
     const [markers, setMarkers] = useState([]);
     const [selected, setSelected] = useState(null);
     const [zoom, setZoom] = useState(3);
+
     const [center, setCenter] = useState({
         lat: countries[0].location.lat,
         lng: countries[0].location.long
@@ -44,33 +36,54 @@ const MapContainer = ({ countries, countrySelected, citySelected }) => {
                 lng: selectedLocation.location.long
             })
 
+            const citiesAddedByUser = localStorage.getItem('citiesAddedByUser') ? JSON.parse(localStorage.getItem('citiesAddedByUser')) : localState.citiesAddedByUser;
+            const cityAdded = citiesAddedByUser.find(city => city.name === selectedLocation.name);
+
             setMarkers([{
                 lat: selectedLocation.location ? selectedLocation.location.lat : 0,
                 lng: selectedLocation.location ? selectedLocation.location.long : 0,
                 id: selectedLocation.id,
                 name: selectedLocation.name,
-            }])
+                population: selectedLocation.population,
+                locationSelected: cityAdded,
+            }]);
         } else {
             setZoom(3);
-            countries.map(item =>
+            countries.map(item => {
+                const citiesAddedByUser = localStorage.getItem('citiesAddedByUser') ? JSON.parse(localStorage.getItem('citiesAddedByUser')) : localState.citiesAddedByUser;
+                const cityAdded = citiesAddedByUser.some(city => city.name === item.name);
+
                 setMarkers(current => [...current, {
                     lat: item.location ? item.location.lat : 0,
                     lng: item.location ? item.location.long : 0,
                     id: item.id,
                     name: item.name,
-                }])
-            );
+                    population: item.population,
+                    locationSelected: cityAdded,
+                }]);
+            });
         }
 
-    }, [countries, countrySelected, citySelected]);
+    }, [countries, countrySelected, citySelected, localState]);
+
+
+    useEffect(() => {
+        // restore local state on refresh
+        setLocalState({
+            ...localState,
+            citiesAddedByUser: JSON.parse(localStorage.getItem('citiesAddedByUser'))
+        });
+        //TODO: improve this
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const onMarkerClick = marker => {
         setSelected(marker);
     };
 
-    const onCloseClick = () => {
+    const onCloseClick = useCallback(() => {
         setSelected(null);
-    }
+    }, []);
 
     return (
         <LoadScript
@@ -89,14 +102,7 @@ const MapContainer = ({ countries, countrySelected, citySelected }) => {
                     />
                 ))}
 
-                {selected ? (<InfoWindow
-                    position={{ lat: selected.lat, lng: selected.lng }}
-                    onCloseClick={onCloseClick}>
-                    <InfoBox>
-                        <City>{selected.name}</City>
-                        <button>Add city to travel</button>
-                    </InfoBox>
-                </InfoWindow>) : null}
+                {selected ? (<MapInfoWindow selected={selected} onCloseClick={onCloseClick} />) : null}
             </GoogleMap>
         </LoadScript>
     )

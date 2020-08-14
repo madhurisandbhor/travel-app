@@ -16,6 +16,7 @@ export const MyContext = createContext();
 function App() {
   const initState = {
     continentSelected: '',
+    citiesAddedByUser: [],
   };
 
   const [localState, setLocalState] = useState(initState);

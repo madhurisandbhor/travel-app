@@ -64,7 +64,7 @@ const SelectMenuCities = ({ countrySelected, setCurrentCity }) => {
                 <>
                     {Object.keys(countryInfo).length !== 0 && <CountryInfoSection countryInfo={countryInfo}></CountryInfoSection>}
                     {cities.length > 0 && <SelectMenu type='city' list={cities} onSelectChange={onCitySelect} />}
-                    {cities.length === 0 && <div style={{ margin: '1rem 0' }}>No cities available</div>}
+                    {cities.length === 0 && <div style={{ margin: '1rem 0' }}>No city available</div>}
                     {Object.keys(cityInfo).length !== 0 && <CityInfoSection cityInfo={cityInfo} />}
                 </>
             }

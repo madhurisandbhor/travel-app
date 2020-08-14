@@ -7,7 +7,7 @@ import SelectMenu from '../../components/SelectMenu/Index';
 import SelectMenuCities from './SelectMenuCities';
 import Wrapper from './Wrapper';
 import ContinentInfoSection from './ContinentInfoSection';
-import MapContainer from './Map';
+import MapContainer from './Map/Index';
 
 const Container = styled.div`
     display: flex;
@@ -42,7 +42,7 @@ const MapSection = styled.div`
 const Continent = () => {
     const { localState } = useContext(MyContext);
     const [countries, setCountries] = useState([]);
-    const continentSelected = localState.continentSelected ? localState.continentSelected : {};
+    const continentSelected = localStorage.getItem('continentSelected') ? JSON.parse(localStorage.getItem('continentSelected')) : localState.continentSelected;
     const [countrySelected, setCountrySelected] = useState({});
     const [citySelected, setCitySelected] = useState({});
 
@@ -58,7 +58,8 @@ const Continent = () => {
                 location {
                     lat
                     long
-                  }
+                }
+                population
             }
         }
     }`;

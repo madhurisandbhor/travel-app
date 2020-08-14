@@ -47,8 +47,10 @@ const Dashboard = () => {
         setLocalState({
             ...localState,
             continentSelected: continentSelected,
+            citiesAddedByUser: localStorage.getItem('citiesAddedByUser') ? JSON.parse(localStorage.getItem('citiesAddedByUser')) : []
         });
         history.push(`/continents/${continentSelected.name}`);
+        localStorage.setItem('continentSelected', JSON.stringify(continentSelected));
     }, [history, localState, setLocalState]);
 
     useEffect(() => {
