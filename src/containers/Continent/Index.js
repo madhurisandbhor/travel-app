@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
-import { MyContext } from '../../App';
+import { InfoContext } from '../../App/InfoContext';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import useHttp from '../../hooks/http';
 import SelectMenu from '../../components/SelectMenu/Index';
@@ -40,9 +40,10 @@ const MapSection = styled.div`
 
 
 const Continent = () => {
-    const { localState, setLocalState } = useContext(MyContext);
+    const { info } = useContext(InfoContext);
+
     const [countries, setCountries] = useState([]);
-    const continentSelected = localStorage.getItem('continentSelected') ? JSON.parse(localStorage.getItem('continentSelected')) : localState.continentSelected;
+    const continentSelected = info.continentSelected;
     const [countrySelected, setCountrySelected] = useState({});
     const [citySelected, setCitySelected] = useState({});
 
@@ -66,22 +67,10 @@ const Continent = () => {
 
     const { isLoading, data, error } = useHttp(url, query);
 
-    // restore local state on refresh
-    // setLocalState({
-    //     ...localState,
-    //     citiesAddedByUser: JSON.parse(localStorage.getItem('citiesAddedByUser'))
-    // });
-
     useEffect(() => {
         if (data !== null) {
             setCountries(data.continents[0].countries);
         }
-
-        // restore local state on refresh
-        // setLocalState({
-        //     ...localState,
-        //     citiesAddedByUser: JSON.parse(localStorage.getItem('citiesAddedByUser'))
-        // });
     }, [data]);
 
     useEffect(() => {
@@ -113,7 +102,7 @@ const Continent = () => {
                             <>
                                 <InfoText>
                                     Please choose your destination to explore
-                        </InfoText>
+                                </InfoText>
                                 <SelectMenu type='country' list={countries} onSelectChange={onCountrySelect} />
                                 {Object.keys(countrySelected).length !== 0 &&
                                     < SelectMenuCities countrySelected={countrySelected} setCurrentCity={onSetCurrentCity} />

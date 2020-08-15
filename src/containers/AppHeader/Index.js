@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
+import React, { useContext, useCallback } from 'react';
 import styled from 'styled-components';
 import Header from '../../components/Header/Index';
 import Toolbar from './Toolbar';
-import { MyContext } from '../../App';
+import { InfoContext } from '../../App/InfoContext';
 
 const Wrapper = styled.header`
     background-color: ${props => props.theme.palette.primary.dark};   
@@ -16,19 +16,36 @@ const Wrapper = styled.header`
 
 const AppHeader = () => {
     const [open, setOpen] = React.useState(false);
-    const { localState, setLocalState } = useContext(MyContext);
+    const { info, setInfo } = useContext(InfoContext);
 
-    const handleDrawerOpen = () => {
-        setLocalState({
-            ...localState,
+    const handleDrawerOpen = useCallback(() => {
+        setInfo({
+            ...info,
             notificationToggle: false,
         });
         setOpen(true);
-    };
+    }, [info, setInfo]);
 
-    const handleDrawerClose = () => {
+    const handleDrawerClose = useCallback(() => {
         setOpen(false);
-    };
+    }, []);
+
+    const onDeleteCity = useCallback((cityName) => {
+        let infoArray = [...info.citiesAddedByUser];
+        infoArray = infoArray.filter(city => city.name !== cityName);
+        setInfo({
+            ...info,
+            citiesAddedByUser: infoArray,
+        });
+    }, [info, setInfo]);
+
+    const onDeleteAllCities = useCallback(() => {
+        setInfo({
+            ...info,
+            citiesAddedByUser: [],
+        });
+    }, [info, setInfo]);
+
     return (
         <Wrapper>
             <Header />
@@ -36,7 +53,9 @@ const AppHeader = () => {
                 open={open}
                 handleDrawerOpen={handleDrawerOpen}
                 handleDrawerClose={handleDrawerClose}
-                notificationToggle={localState.notificationToggle}
+                notificationToggle={info.notificationToggle}
+                onDeleteCity={onDeleteCity}
+                onDeleteAllCities={onDeleteAllCities}
             />
         </Wrapper>);
 };

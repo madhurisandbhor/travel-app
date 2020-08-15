@@ -8,8 +8,7 @@ import DoneIcon from '@material-ui/icons/Done';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import TextField from '@material-ui/core/TextField';
-import { MyContext } from '../../../App';
-
+import { InfoContext } from '../../../App/InfoContext';
 
 const InfoBox = styled.div`
     display: flex;
@@ -41,7 +40,8 @@ const Button = withStyles((theme) => ({
 }))(IconButton);
 
 const MapInfoWindow = ({ selected, onCloseClick }) => {
-    const { localState, setLocalState } = useContext(MyContext);
+    const { info, setInfo } = useContext(InfoContext);
+
     const [isCityAdded, setIsCityAdded] = useState(false);
     const [selectedDate, setSelectedDate] = React.useState(new Date().toISOString().split("T")[0]);
 
@@ -51,33 +51,33 @@ const MapInfoWindow = ({ selected, onCloseClick }) => {
 
     const onAddCity = () => {
         const updatedCity = { ...selected, locationSelected: true, selectedDate: selectedDate }
-        setLocalState({
-            ...localState,
-            citiesAddedByUser: [...localState.citiesAddedByUser, updatedCity],
+        setInfo({
+            ...info,
+            citiesAddedByUser: [...info.citiesAddedByUser, updatedCity],
             notificationToggle: true,
         });
     };
 
     const onDelete = () => {
-        let localStateArray = [...localState.citiesAddedByUser];
-        localStateArray = localStateArray.filter(city => city.name !== selected.name);
-        setLocalState({
-            ...localState,
-            citiesAddedByUser: localStateArray
+        let infoArray = [...info.citiesAddedByUser];
+        infoArray = infoArray.filter(city => city.name !== selected.name);
+        setInfo({
+            ...info,
+            citiesAddedByUser: infoArray
         });
     }
 
     useEffect(() => {
         // update local storage after adding city
-        localStorage.setItem('citiesAddedByUser', JSON.stringify(localState.citiesAddedByUser));
-    }, [localState]);
+        localStorage.setItem('citiesAddedByUser', JSON.stringify(info.citiesAddedByUser));
+    }, [info]);
 
     useEffect(() => {
         // after adding update check icon and add/delete button
-        const citiesAddedByUser = localStorage.getItem('citiesAddedByUser') ? JSON.parse(localStorage.getItem('citiesAddedByUser')) : localState.citiesAddedByUser;
+        const citiesAddedByUser = info.citiesAddedByUser;
         const cityAdded = citiesAddedByUser.some(city => (city.name === selected.name));
         setIsCityAdded(cityAdded);
-    }, [selected, setIsCityAdded, localState]);
+    }, [selected, setIsCityAdded, info]);
 
     //TODO: change date option, when date is seleted then enable add button
 

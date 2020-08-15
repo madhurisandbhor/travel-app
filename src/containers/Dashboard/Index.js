@@ -6,7 +6,7 @@ import Card from './Card';
 import ContinentName from './ContinentName';
 import ImageContainer from './ImageContainer';
 import LoadingIndicator from '../../components/LoadingIndicator';
-import { MyContext } from '../../App';
+import { InfoContext } from '../../App/InfoContext';
 import useHttp from '../../hooks/http';
 
 const Wrapper = styled.div`
@@ -26,7 +26,7 @@ const ContinentWrapper = styled.div`
 
 const Dashboard = () => {
     const [continentsList, setContinentsList] = useState([]);
-    const { localState, setLocalState } = useContext(MyContext);
+    const { info, setInfo } = useContext(InfoContext);
     const history = useHistory();
     const url = 'https://api.everbase.co/graphql?apikey=your_key';
     const query = `{
@@ -44,14 +44,13 @@ const Dashboard = () => {
 
 
     const getCountinentInfo = useCallback(continentSelected => {
-        setLocalState({
-            ...localState,
+        setInfo({
+            ...info,
             continentSelected: continentSelected,
-            citiesAddedByUser: localStorage.getItem('citiesAddedByUser') ? JSON.parse(localStorage.getItem('citiesAddedByUser')) : []
         });
         history.push(`/continents/${continentSelected.name}`);
-        localStorage.setItem('continentSelected', JSON.stringify(continentSelected));
-    }, [history, localState, setLocalState]);
+        // localStorage.setItem('continentSelected', JSON.stringify(continentSelected));
+    }, [history, info, setInfo]);
 
     useEffect(() => {
         if (data !== null) {

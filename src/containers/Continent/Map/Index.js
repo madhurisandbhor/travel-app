@@ -2,8 +2,7 @@ import React, { useState, useEffect, useCallback, useContext } from 'react'
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import PropTypes from 'prop-types';
 import MapInfoWindow from './MapInfoWindow';
-import { MyContext } from '../../../App';
-
+import { InfoContext } from '../../../App/InfoContext';
 
 const containerStyle = {
     width: '45vw',
@@ -11,9 +10,10 @@ const containerStyle = {
 };
 
 const MapContainer = ({ countries, countrySelected, citySelected }) => {
-    const { localState, setLocalState } = useContext(MyContext);
+    const { info } = useContext(InfoContext);
+
     const [markers, setMarkers] = useState([]);
-    const [selected, setSelected] = useState(null);
+    const [selected, setSelected] = useState('');
     const [zoom, setZoom] = useState(3);
 
     const [center, setCenter] = useState({
@@ -23,7 +23,7 @@ const MapContainer = ({ countries, countrySelected, citySelected }) => {
 
     useEffect(() => {
         const selectedLocation = Object.keys(citySelected).length !== 0 ? citySelected : countrySelected;
-        const citiesAddedByUser = localStorage.getItem('citiesAddedByUser') ? JSON.parse(localStorage.getItem('citiesAddedByUser')) : localState.citiesAddedByUser;
+        const citiesAddedByUser = info.citiesAddedByUser;
 
         if (Object.keys(citySelected).length !== 0 || Object.keys(countrySelected).length !== 0) {
             if (Object.keys(citySelected).length !== 0) {
@@ -63,7 +63,7 @@ const MapContainer = ({ countries, countrySelected, citySelected }) => {
             });
         }
 
-    }, [countries, countrySelected, citySelected, localState]);
+    }, [countries, countrySelected, citySelected, info]);
 
     const onMarkerClick = marker => {
         setSelected(marker);

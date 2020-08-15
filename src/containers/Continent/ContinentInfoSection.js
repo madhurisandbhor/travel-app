@@ -21,7 +21,7 @@ const ContinentInfoSection = ({ continentSelected }) => (
         <Text>Geographical Information</Text>
         <Text>Continent : {continentSelected.name}</Text>
         <Text>Population: {continentSelected.population}</Text>
-        <Text>Countries : {continentSelected.countries.length}</Text>
+        <Text>Countries : {continentSelected.countries && continentSelected.countries.length}</Text>
     </Wrapper>
 );
 

@@ -1,4 +1,4 @@
-import React, { useState, createContext } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import {
   ThemeProvider as MuiThemeProvider,
@@ -6,26 +6,18 @@ import {
 } from '@material-ui/styles';
 import { ThemeProvider } from 'styled-components';
 import theme from './Theme';
-import AppHeader from './containers/AppHeader/Index';
-import NotFound from './components/NotFoundPage';
-import Dashboard from './containers/Dashboard/Index';
-import Continent from './containers/Continent/Index';
-
-export const MyContext = createContext();
+import AppHeader from '../containers/AppHeader/Index';
+import NotFound from '../components/NotFoundPage';
+import Dashboard from '../containers/Dashboard/Index';
+import Continent from '../containers/Continent/Index';
+import { InfoProvider } from './InfoContext';
 
 function App() {
-  const initState = {
-    continentSelected: '',
-    citiesAddedByUser: [],
-    notificationToggle: false,
-  };
-
-  const [localState, setLocalState] = useState(initState);
   return (
     <StylesProvider injectFirst>
       <MuiThemeProvider theme={theme}>
         <ThemeProvider theme={theme}>
-          <MyContext.Provider value={{ localState, setLocalState }}>
+          <InfoProvider>
             <Router>
               <div className="app">
                 <AppHeader />
@@ -38,7 +30,7 @@ function App() {
                 </div>
               </div>
             </Router>
-          </MyContext.Provider>
+          </InfoProvider>
         </ThemeProvider>
       </MuiThemeProvider>
     </StylesProvider>

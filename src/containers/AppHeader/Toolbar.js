@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 import FlightTakeoffIcon from '@material-ui/icons/FlightTakeoff';
 import Badge from '@material-ui/core/Badge';
 import ItineraryDrawer from './ItineraryDrawer';
@@ -30,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Toolbar = ({ open, handleDrawerOpen, handleDrawerClose, notificationToggle }) => {
+const Toolbar = ({ notificationToggle, handleDrawerOpen, open, ...rest }) => {
     const classes = useStyles();
 
     return (
@@ -51,10 +50,9 @@ const Toolbar = ({ open, handleDrawerOpen, handleDrawerClose, notificationToggle
                     classes={{ badge: notificationToggle && classes.customBadge }}
                 >
                     <FlightTakeoffIcon />
-                    {/* <MenuIcon /> */}
                 </Badge>
             </IconButton>
-            <ItineraryDrawer open={open} handleDrawerClose={handleDrawerClose} />
+            <ItineraryDrawer open={open} {...rest} />
         </ToolbarWrapper >);
 };
 
