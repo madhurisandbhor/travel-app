@@ -73,13 +73,6 @@ const Continent = () => {
         }
     }, [data]);
 
-    useEffect(() => {
-        console.log('continent mounted');
-        return () => {
-            console.log('continent unmounted');
-        }
-    }, [])
-
     const onCountrySelect = useCallback(selectedCountry => {
         const countrySelected = selectedCountry ? selectedCountry : {};
         setCountrySelected(countrySelected);

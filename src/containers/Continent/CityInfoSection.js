@@ -13,6 +13,7 @@ const Text = styled.div`
    margin-bottom: 1rem;
    &:first-child {
        font-weight: bold;
+       color: ${props => props.theme.palette.primary.main};
    }
 `;
 

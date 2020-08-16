@@ -39,6 +39,12 @@ const Button = withStyles((theme) => ({
     },
 }))(IconButton);
 
+const Text = withStyles((theme) => ({
+    root: {
+        margin: '1rem 0 .5rem 0'
+    },
+}))(TextField);
+
 const MapInfoWindow = ({ selected, onCloseClick }) => {
     const { info, setInfo } = useContext(InfoContext);
 
@@ -90,7 +96,7 @@ const MapInfoWindow = ({ selected, onCloseClick }) => {
                 <span>Population : {selected.population}</span>
                 {!isCityAdded &&
                     <>
-                        <TextField
+                        <Text
                             id="date"
                             label="Select date"
                             type="date"
@@ -98,9 +104,6 @@ const MapInfoWindow = ({ selected, onCloseClick }) => {
                             onChange={handleDateChange}
                             InputLabelProps={{
                                 shrink: true,
-                            }}
-                            style={{
-                                margin: '1rem 0 .5rem 0'
                             }}
                         />
                         <Button aria-label="add city" onClick={onAddCity}>

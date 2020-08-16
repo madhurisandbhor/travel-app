@@ -11,6 +11,7 @@ import NotFound from '../components/NotFoundPage';
 import Dashboard from '../containers/Dashboard/Index';
 import Continent from '../containers/Continent/Index';
 import { InfoProvider } from './InfoContext';
+import './App.css';
 
 function App() {
   return (

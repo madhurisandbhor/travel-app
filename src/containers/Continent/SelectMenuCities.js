@@ -1,10 +1,15 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import useHttp from '../../hooks/http';
 import SelectMenu from '../../components/SelectMenu/Index';
 import CountryInfoSection from './CountryInfoSection';
 import CityInfoSection from './CityInfoSection';
+
+const NoCityText = styled.div`
+  margin: 1rem 0;
+`;
 
 const SelectMenuCities = ({ countrySelected, setCurrentCity }) => {
     const [cities, setCities] = useState([]);
@@ -64,7 +69,7 @@ const SelectMenuCities = ({ countrySelected, setCurrentCity }) => {
                 <>
                     {Object.keys(countryInfo).length !== 0 && <CountryInfoSection countryInfo={countryInfo}></CountryInfoSection>}
                     {cities.length > 0 && <SelectMenu type='city' list={cities} onSelectChange={onCitySelect} />}
-                    {cities.length === 0 && <div style={{ margin: '1rem 0' }}>No city available</div>}
+                    {cities.length === 0 && <NoCityText>No city available</NoCityText>}
                     {Object.keys(cityInfo).length !== 0 && <CityInfoSection cityInfo={cityInfo} />}
                 </>
             }
