@@ -21,14 +21,14 @@ const useStyles = makeStyles((theme) => ({
         height: '45rem'
     },
     message: {
-        margin: '2rem 0',
+        margin: '1.5rem 0',
         textAlign: 'center',
     },
     hidden: {
         visibility: 'hidden',
     },
     sliderContainer: {
-        height: '40rem',
+        height: '44rem',
         width: '100%',
         position: 'relative',
         overflow: 'hidden',
