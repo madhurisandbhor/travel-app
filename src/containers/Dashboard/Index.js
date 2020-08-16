@@ -24,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
         margin: '2rem 0',
         textAlign: 'center',
     },
+    hidden: {
+        visibility: 'hidden',
+    },
     sliderContainer: {
         height: '40rem',
         width: '100%',
@@ -50,7 +53,6 @@ const useStyles = makeStyles((theme) => ({
             background: theme.palette.primary.main,
         }
     },
-
     // slide: {
     //     position: 'absolute',
     //     top: 0,
@@ -59,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
     //     backgroundPosition: '50% 50%',
     //     transition: 'left 0s .75s',
     // },
-    // TODO: fix syntax issue
+    // TODO: fix syntax issue with sibling
     // '@global': {
     //     '[id^="slide"]:checked ~$slide': {
     //         left: 0,
@@ -128,25 +130,38 @@ const Dashboard = () => {
             {isLoading && <LoadingIndicator />}
             {error && <div>{error}</div>}
             {!isLoading &&
-                <div className={classes.sliderContainer}>
-                    <div className={classes.menu}>
+                <>
+                    <div className={classes.sliderContainer}>
+                        <div className={classes.menu}>
+                            {UpdatedcontinentsList.length > 0 && UpdatedcontinentsList.map((continent, index) =>
+                                <label className={classes.label} key={continent.id} htmlFor={`slide-dot-${index + 1}`}></label>
+                            )}
+                        </div>
                         {UpdatedcontinentsList.length > 0 && UpdatedcontinentsList.map((continent, index) =>
-                            <label className={classes.label} key={continent.id} htmlFor={`slide-dot-${index + 1}`}></label>
+                            <React.Fragment key={continent.id}>
+                                <input
+                                    id={`slide-dot-${index + 1}`}
+                                    className={classes.hidden}
+                                    type="radio"
+                                    name="slides"
+                                    onChange={e => onRadioInput(index, e)}
+                                    checked={selected === index}
+                                />
+                                <ImageContainer
+                                    className="slide"
+                                    image={`'${continent.img}'`}
+                                    onClick={(event) => getCountinentInfo(continent, event)}
+                                >
+                                    <ContinentName>{continent.name}</ContinentName>
+                                </ImageContainer>
+                            </React.Fragment>
                         )}
                     </div>
-                    {UpdatedcontinentsList.length > 0 && UpdatedcontinentsList.map((continent, index) =>
-                        <React.Fragment key={continent.id}>
-                            <input id={`slide-dot-${index + 1}`} type="radio" name="slides" onChange={e => onRadioInput(index, e)} checked={selected === index} />
-                            <ImageContainer className="slide" image={`'${continent.img}'`} onClick={(event) => getCountinentInfo(continent, event)}>
-                                <ContinentName>{continent.name}</ContinentName>
-                            </ImageContainer>
-                        </React.Fragment>
-                    )}
-                </div>
+                    <h4 className={classes.message}>
+                        Please click on the image to select a continent
+                    </h4>
+                </>
             }
-              <h4 className={classes.message}>
-                Please click on the image to select a continent
-            </h4>
         </div >
     );
 };
