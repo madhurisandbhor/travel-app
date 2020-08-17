@@ -9,7 +9,8 @@ export const useHttp = (url, query) => {
     const [data, setData] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
-
+    console.log(url, query);
+    
     useEffect(() => {
         setIsLoading(true);
         const fetchData = async () => {
@@ -29,7 +30,7 @@ export const useHttp = (url, query) => {
         };
 
         fetchData();
-    }, [url,query]);
+    }, [url, query]);
 
     return { data, error, isLoading };
 };
