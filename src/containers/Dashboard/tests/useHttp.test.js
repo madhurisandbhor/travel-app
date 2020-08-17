@@ -34,7 +34,6 @@ describe("useHttp", () => {
             await waitForNextUpdate();
         });
 
-        console.log(result.current);
         expect(result.current.loading).toBeFalsy();
         expect(result.current.data.continents.length).toEqual(1);
     });
