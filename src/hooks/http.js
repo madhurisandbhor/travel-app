@@ -12,7 +12,7 @@ const httpReducer = (currentState, action) => {
     }
 }
 
-const useHttp = (url, query) => {
+function useHttp(url, query) {
     const [httpState, dispatchHttp] = useReducer(httpReducer, { loading: false, error: null, responseData: null });
 
     useEffect(() => {

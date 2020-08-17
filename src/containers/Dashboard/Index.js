@@ -12,7 +12,7 @@ import ContinentName from './ContinentName';
 import ImageContainer from './ImageContainer';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import { InfoContext } from '../../App/InfoContext';
-import useHttp from '../../hooks/http';
+import { useHttp } from './useHttp';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -116,9 +116,9 @@ const Dashboard = () => {
         //update list with respective images as images are not provided by backend
         const tempList = [...continentsList];
         const listWithImages = tempList.map(continent => {
-            images.forEach(image => {
-                if (image.split('/')[3].toString().includes(continent.name))
-                    continent.img = image;
+            images.length > 0 && images.forEach(image => {
+                    if (image.includes('/') && image.split('/')[3].toString().includes(continent.name))
+                        continent.img = image;
             });
             return continent;
         });
@@ -160,8 +160,7 @@ const Dashboard = () => {
                     <h4 className={classes.message}>
                         Please click on the image to select a continent
                     </h4>
-                </>
-            }
+                </>}
         </div >
     );
 };

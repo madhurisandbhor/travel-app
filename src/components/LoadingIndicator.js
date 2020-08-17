@@ -10,7 +10,7 @@ const Circle = styled.i`
 `;
 
 const LoadingIndicator = () => (
-    <Loader>
+    <Loader data-testid="loader">
         <Circle className="fas fa-circle-notch fa-2x fa-spin"></Circle>
     </Loader>
 );
