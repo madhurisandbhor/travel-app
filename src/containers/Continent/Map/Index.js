@@ -9,6 +9,8 @@ const containerStyle = {
     height: '80vh'
 };
 
+const API_KEY = process.env.REACT_APP_API_KEY;
+
 const MapContainer = ({ countries, countrySelected, citySelected }) => {
     const { info } = useContext(InfoContext);
 
@@ -75,7 +77,7 @@ const MapContainer = ({ countries, countrySelected, citySelected }) => {
 
     return (
         <LoadScript
-            googleMapsApiKey="AIzaSyAm_mGNkn5Eyg09y4mHuZo5jHFICyKPBvo"
+            googleMapsApiKey={API_KEY}
         >
             <GoogleMap
                 mapContainerStyle={containerStyle}
