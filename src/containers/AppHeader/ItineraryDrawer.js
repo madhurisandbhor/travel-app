@@ -10,7 +10,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import { InfoContext } from '../../App/InfoContext';
+import { InfoContext } from 'app/InfoContext';
 
 const Title = styled.b`
   align-self: center; 
@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.app.white,
     fontSize: '1.1rem',
     '&:hover': {
-      background: theme.palette.primary.dark,
+      background: theme.palette.secondary.main,
     }
   }
 }));

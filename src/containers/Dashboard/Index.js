@@ -1,17 +1,17 @@
 import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import asia from '../../images/Asia.jpg';
-import africa from '../../images/Africa.jpg';
-import antarctica from '../../images/Antarctica.jpg';
-import europe from '../../images/Europe.jpg';
-import oceania from '../../images/Oceania.jpg';
-import north_america from '../../images/North America.jpg';
-import south_america from '../../images/South America.jpg';
+import asia from 'images/Asia.jpg';
+import africa from 'images/Africa.jpg';
+import antarctica from 'images/Antarctica.jpg';
+import europe from 'images/Europe.jpg';
+import oceania from 'images/Oceania.jpg';
+import north_america from 'images/North America.jpg';
+import south_america from 'images/South America.jpg';
 import ContinentName from './ContinentName';
 import ImageContainer from './ImageContainer';
-import LoadingIndicator from '../../components/LoadingIndicator';
-import { InfoContext } from '../../App/InfoContext';
+import LoadingIndicator from 'components/LoadingIndicator';
+import { InfoContext } from 'app/InfoContext';
 import { useHttp } from './useHttp';
 
 const useStyles = makeStyles((theme) => ({

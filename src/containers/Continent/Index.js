@@ -1,47 +1,16 @@
 import React, { useContext, useState, useEffect, useCallback } from 'react';
-import styled from 'styled-components';
-import { InfoContext } from '../../App/InfoContext';
-import LoadingIndicator from '../../components/LoadingIndicator';
-import useHttp from '../../hooks/http';
-import SelectMenu from '../../components/SelectMenu/Index';
+import { InfoContext } from 'app/InfoContext';
+import LoadingIndicator from 'components/LoadingIndicator';
+import useHttp from 'hooks/http';
+import SelectMenu from 'components/SelectMenu';
 import SelectMenuCities from './SelectMenuCities';
-import Wrapper from './Wrapper';
-import ContinentInfoSection from './ContinentInfoSection';
-import MapContainer from './Map/Index';
-
-const Container = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    margin: 2rem 0;
-    height: auto;
-`;
-
-const Info = styled.div`
-    width: 40%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-content: space-around;
-`;
-
-const InfoText = styled.div`
-    margin-bottom: 1.5rem;
-    font-weight: bold;
-`;
-
-const MapSection = styled.div`
-    width: 60%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-`;
-
+import Wrapper from './styles';
+import ContinentInfoSection from './Cards/ContinentInfoSection';
+import MapContainer from './Map';
+import {Container, MapSection, Info, InfoText } from './styles'
 
 const Continent = () => {
     const { info } = useContext(InfoContext);
-
     const [countries, setCountries] = useState([]);
     const continentSelected = info.continentSelected;
     const [countrySelected, setCountrySelected] = useState({});

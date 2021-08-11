@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 export default styled(NavLink)`
   display: inline-flex;
-  padding: 1rem 2rem;
+  padding: 0.5rem 2rem;
   text-decoration: none;
   user-select: none;
   cursor: pointer;

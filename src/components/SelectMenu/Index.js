@@ -8,7 +8,7 @@ const AutocompleteWrapper = withStyles({
     root: {
         fontSize: '1.6rem',
         marginBottom: '1.2rem',
-        width: '30rem',
+        width: '80%',
     },
     option: {
         fontSize: '1.5rem',

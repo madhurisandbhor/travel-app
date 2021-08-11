@@ -2,8 +2,8 @@ import React from "react";
 import { render, cleanup } from "@testing-library/react";
 import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
 import { ThemeProvider } from 'styled-components';
-import { InfoProvider } from '../../../App/InfoContext';
-import Dashboard from "../Index";
+import { InfoProvider } from '../app/InfoContext';
+import Dashboard from "containers/Dashboard";
 import { useHttp } from '../useHttp';
 
 afterEach(cleanup);

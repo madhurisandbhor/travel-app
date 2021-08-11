@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useContext } from 'react'
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import PropTypes from 'prop-types';
 import MapInfoWindow from './MapInfoWindow';
-import { InfoContext } from '../../../App/InfoContext';
+import { InfoContext } from 'app/InfoContext';
 
 const containerStyle = {
     width: '45vw',

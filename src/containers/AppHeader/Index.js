@@ -1,12 +1,12 @@
 import React, { useContext, useCallback } from 'react';
 import styled from 'styled-components';
-import Header from '../../components/Header/Index';
+import Header from 'components/Header';
 import Toolbar from './Toolbar';
-import { InfoContext } from '../../App/InfoContext';
+import { InfoContext } from 'app/InfoContext';
 
 const Wrapper = styled.header`
-    background-color: ${props => props.theme.palette.primary.dark};   
-    min-height: 6.5rem;
+    background-color: ${props => props.theme.palette.secondary.main};   
+    min-height: 5.5rem;
     display: flex;
     flex-direction: row;
     align-items: center;

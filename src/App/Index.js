@@ -6,10 +6,10 @@ import {
 } from '@material-ui/styles';
 import { ThemeProvider } from 'styled-components';
 import theme from './Theme';
-import AppHeader from '../containers/AppHeader/Index';
-import NotFound from '../components/NotFoundPage';
-import Dashboard from '../containers/Dashboard/Index';
-import Continent from '../containers/Continent/Index';
+import AppHeader from 'containers/AppHeader';
+import Dashboard from 'containers/Dashboard';
+import Continent from 'containers/Continent';
+import NotFound from 'components/NotFoundPage';
 import { InfoProvider } from './InfoContext';
 import './App.css';
 

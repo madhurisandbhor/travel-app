@@ -1,8 +1,9 @@
-import { createMuiTheme } from '@material-ui/core/styles';
+import { createTheme  } from '@material-ui/core/styles';
 
-const theme = createMuiTheme({
+const theme = createTheme ({
     palette: {
-        primary: { light: '#d3bcc0', main: '#ff4500', dark: '#5d1dd4' },
+        primary: { light: '#d3bcc0', main: '#ff4500', dark: '' },
+        secondary: { light: '', main: '#5d1dd4', dark: '' },
     },
     app: {
         white: '#fff',
@@ -11,6 +12,9 @@ const theme = createMuiTheme({
         red: '#e33030',
         blue: '#3330e3',
         green: '#1fab26',
+    },
+    typography:{
+        fontFamily:`"Quicksand", sans-serif`,
     },
     overrides: {
         MuiInputLabel: {

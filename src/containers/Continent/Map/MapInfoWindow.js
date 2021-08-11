@@ -8,7 +8,7 @@ import DoneIcon from '@material-ui/icons/Done';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import TextField from '@material-ui/core/TextField';
-import { InfoContext } from '../../../App/InfoContext';
+import { InfoContext } from 'app/InfoContext';
 
 const InfoBox = styled.div`
     display: flex;
@@ -19,6 +19,8 @@ const InfoBox = styled.div`
 
 const City = styled.b`
     margin-bottom: .5rem;
+    font-size: 1.6rem;
+    color: ${(props) => props.theme.palette.secondary.main};
 `;
 
 const MoreOptions = styled.div`
@@ -31,7 +33,7 @@ const MoreOptions = styled.div`
 const Button = withStyles((theme) => ({
     root: {
         fontSize: '1.6rem',
-        color: theme.palette.primary.dark,
+        color: theme.palette.secondary.main,
         '&:hover': {
             color: theme.palette.primary.main,
         },
@@ -93,7 +95,6 @@ const MapInfoWindow = ({ selected, onCloseClick }) => {
             onCloseClick={onCloseClick}>
             <InfoBox>
                 <City>{selected.name}</City>
-                <span>Population : {selected.population}</span>
                 {!isCityAdded &&
                     <>
                         <Text

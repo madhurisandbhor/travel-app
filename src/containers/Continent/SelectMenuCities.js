@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import LoadingIndicator from '../../components/LoadingIndicator';
-import useHttp from '../../hooks/http';
-import SelectMenu from '../../components/SelectMenu/Index';
-import CountryInfoSection from './CountryInfoSection';
-import CityInfoSection from './CityInfoSection';
+import LoadingIndicator from 'components/LoadingIndicator';
+import useHttp from 'hooks/http';
+import SelectMenu from 'components/SelectMenu';
+import CountryInfoSection from './Cards/CountryInfoSection';
+import CityInfoSection from './Cards/CityInfoSection';
 
 const NoCityText = styled.div`
   margin: 1rem 0;
