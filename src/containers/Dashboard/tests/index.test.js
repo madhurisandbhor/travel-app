@@ -1,8 +1,8 @@
 import React from "react";
 import { render, cleanup } from "@testing-library/react";
-import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
+import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
 import { ThemeProvider } from 'styled-components';
-import { InfoProvider, InfoContext } from '../../../App/InfoContext';
+import { InfoProvider } from '../../../App/InfoContext';
 import Dashboard from "../Index";
 import { useHttp } from '../useHttp';
 
