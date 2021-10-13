@@ -5,7 +5,7 @@ import Toolbar from './Toolbar';
 import { InfoContext } from 'app/InfoContext';
 
 const Wrapper = styled.header`
-    background-color: ${props => props.theme.palette.secondary.main};   
+    // background-color: ${props => props.theme.palette.secondary.main};   
     min-height: 5.5rem;
     display: flex;
     flex-direction: row;

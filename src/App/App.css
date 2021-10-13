@@ -1,5 +1,6 @@
 .app {
-  font-size: 1.4rem;
+  font-size: 1.6rem;
+  background: linear-gradient(90deg, #0DDFFD 0%, #FF8BE3 100%);
 }
 
 .app-body {
