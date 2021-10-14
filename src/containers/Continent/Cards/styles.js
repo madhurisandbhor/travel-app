@@ -1,7 +1,7 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  width: 80%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   margin-bottom: 1.5rem;
@@ -11,21 +11,21 @@ export const Wrapper = styled.div`
   &:last-child {
     margin-bottom: 0;
   }
-`
+`;
 
 export const Title = styled.div`
   margin-bottom: 1rem;
-  color: ${(props) => props.theme.palette.primary.main};
+  color: ${(props) => props.theme.palette.primary.dark};
   padding-bottom: 1rem;
   border-bottom: 0.1rem solid black;
-`
+`;
 export const Grid3 = styled.div`
   width: 100%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(1, auto);
   grid-gap: 3rem;
-`
+`;
 
 export const Grid = styled.div`
   width: 100%;
@@ -33,7 +33,7 @@ export const Grid = styled.div`
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(2, auto);
   grid-gap: 1rem;
-`
+`;
 
 export const Text = styled.div`
   display: flex;
@@ -41,10 +41,10 @@ export const Text = styled.div`
 
   & > span:first-child {
     font-size: 1.2rem;
-    color: ${(props) => props.theme.palette.secondary.main};
+    color: ${(props) => props.theme.palette.secondary.dark};
   }
   & > span:last-child {
     font-weight: bold;
     font-size: 1.4rem;
   }
-`
+`;

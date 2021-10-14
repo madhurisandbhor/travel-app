@@ -2,7 +2,7 @@ import { renderHook } from "@testing-library/react-hooks";
 import "whatwg-fetch";
 import fetchMock from "fetch-mock";
 import { act } from "react-test-renderer";
-import { useHttp } from "../useHttp";
+import { useHttp } from "../hooks/useHttp";
 
 describe("useHttp", () => {
     beforeAll(() => {

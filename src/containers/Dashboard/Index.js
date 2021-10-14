@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback, useContext } from "react";
 import { useHistory } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import asia from "images/Asia.jpg";
 import africa from "images/Africa.jpg";
@@ -11,64 +10,9 @@ import north_america from "images/North America.jpg";
 import south_america from "images/South America.jpg";
 import LoadingIndicator from "components/LoadingIndicator";
 import { InfoContext } from "app/InfoContext";
-import { useHttp } from "./useHttp";
-import theme from "app/Theme";
-
-const useStyles = makeStyles(() => ({
-  root: {
-    width: "100%",
-    margin: "0 auto",
-    height: "100%",
-    display: "flex",
-    flexDirection: "column",
-  },
-  hidden: {
-    visibility: "hidden",
-  },
-  sliderContainer: {
-    width: "80%",
-    height: "100%",
-    display: "grid",
-    gridTemplateColumns: "repeat(3, 1fr)",
-    gridAutoFlow: "row",
-    gridGap: "2rem",
-    margin: "2rem auto",
-  },
-  card: {
-    width: "100%",
-    height: "30rem",
-    display: "flex",
-    flexDirection: "column",
-    padding: "1rem",
-    "& > hover": {},
-  },
-  name: {
-    zIndex: 99,
-    // color: theme.app.white,
-    fontSize: "1.8rem",
-  },
-  img: {
-    width: "100%",
-    height: "70%",
-    objectFit: "cover",
-  },
-  topSection: {
-    height: "10rem",
-    alignSelf: "center",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    color: theme.app.white,
-  },
-  title: {
-    fontSize: "3rem",
-    fontWeight: "500",
-  },
-  subText: {
-    fontSize: "2rem",
-  },
-}));
+import { useHttp } from "hooks/useHttp";
+import TopSection from "components/TopSection";
+import useStyles from "./styles";
 
 const images = [
   asia,
@@ -140,28 +84,21 @@ const Dashboard = () => {
 
   return (
     <div className={classes.root}>
-      <div className={classes.topSection}>
-        <div className={classes.title}>Explore world with US!</div>
-        <div className={classes.subText}></div>
-        Locate your next travel destination and create your itinerary
-      </div>
+      <TopSection />
       {isLoading && <LoadingIndicator />}
       {error && <div>{error}</div>}
       {!isLoading && (
         <div className={classes.sliderContainer}>
           {UpdatedcontinentsList.length > 0 &&
-            UpdatedcontinentsList.map((continent, index) => (
+            UpdatedcontinentsList.map((continent) => (
               <Card
                 className={classes.card}
                 key={continent.id}
                 onClick={(event) => getContinentInfo(continent, event)}
               >
-                <img
-                  className={classes.img}
-                  src={continent.img}
-                  alt={continent.name}
-                />
+                <img src={continent.img} alt={continent.name} />
                 <div className={classes.name}>{continent.name}</div>
+                <div className={classes.content}></div>
               </Card>
             ))}
         </div>

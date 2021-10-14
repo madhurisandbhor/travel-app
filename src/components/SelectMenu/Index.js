@@ -3,12 +3,14 @@ import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { withStyles } from '@material-ui/core/styles';
+import theme from 'app/Theme';
 
 const AutocompleteWrapper = withStyles({
     root: {
         fontSize: '1.6rem',
         marginBottom: '1.2rem',
-        width: '80%',
+        width: '100%',
+        color: theme.palette.primary.dark,
     },
     option: {
         fontSize: '1.5rem',

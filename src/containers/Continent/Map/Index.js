@@ -4,11 +4,6 @@ import PropTypes from 'prop-types';
 import MapInfoWindow from './MapInfoWindow';
 import { InfoContext } from 'app/InfoContext';
 
-const containerStyle = {
-    width: '45vw',
-    height: '80vh'
-};
-
 const API_KEY = process.env.REACT_APP_API_KEY;
 
 const MapContainer = ({ countries, countrySelected, citySelected }) => {
@@ -80,9 +75,10 @@ const MapContainer = ({ countries, countrySelected, citySelected }) => {
             googleMapsApiKey={API_KEY}
         >
             <GoogleMap
-                mapContainerStyle={containerStyle}
+                // mapContainerStyle={containerStyle}
                 center={center}
                 zoom={zoom}
+                mapContainerClassName="googleMap"
             >
                 {markers.map((marker) => (
                     <Marker

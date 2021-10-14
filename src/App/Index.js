@@ -22,13 +22,13 @@ function App() {
             <Router>
               <div className="app">
                 <AppHeader />
-                <div className="app-body">
+                <main className="app-body">
                   <Switch>
                     <Route exact path='/' component={Dashboard} />
                     <Route path='/continents/:continent' component={Continent} />
                     <Route path='' component={NotFound} />
                   </Switch>
-                </div>
+                </main>
               </div>
             </Router>
           </InfoProvider>
