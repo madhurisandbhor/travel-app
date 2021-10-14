@@ -96,7 +96,7 @@ const Dashboard = () => {
                 key={continent.id}
                 onClick={(event) => getContinentInfo(continent, event)}
               >
-                <img src={continent.img} alt={continent.name} />
+                <img src={continent.img} alt={continent.name} loading="lazy" />
                 <div className={classes.name}>{continent.name}</div>
                 <div className={classes.content}></div>
               </Card>
