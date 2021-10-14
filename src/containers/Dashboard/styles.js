@@ -32,8 +32,11 @@ const useStyles = makeStyles((theme) => ({
     height: "30rem",
     display: "flex",
     flexDirection: "column",
-    border: "1rem solid white",
+    border: "0.8rem solid white",
     position: "relative",
+    borderRadius: 0,
+    borderBottomWidth: '2.4rem',
+    background: 'lightgrey',
     "&:hover": {
       cursor: "pointer",
     },

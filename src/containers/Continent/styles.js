@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export default styled.div`
   width: 100%;
-  min-height: 100vh;
+  min-height: 100%;
   background: white;
 `;
 
@@ -33,6 +33,7 @@ export const InfoText = styled.div`
   margin-bottom: 1.5rem;
   font-weight: bold;
   width: 100%;
+  opacity: 0.9;
 `;
 
 export const MapSection = styled.div`

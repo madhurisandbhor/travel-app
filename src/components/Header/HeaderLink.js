@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
 export default styled(NavLink)`
-  display: inline-flex;
+  display: inline-block;
   padding: 0.5rem 2rem;
   text-decoration: none;
   user-select: none;

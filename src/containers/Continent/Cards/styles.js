@@ -46,5 +46,6 @@ export const Text = styled.div`
   & > span:last-child {
     font-weight: bold;
     font-size: 1.4rem;
+    opacity: 0.9;
   }
 `;

@@ -5,7 +5,7 @@ const TopSection = () => {
   const classes = useStyles();
   return (
     <div className={classes.topSection}>
-      <div className={classes.title}>Explore world with US!</div>
+      <div className={classes.title}>Explore the world with US!</div>
       <div className={classes.subText}>
         Locate your next travel destination and create your itinerary
       </div>
