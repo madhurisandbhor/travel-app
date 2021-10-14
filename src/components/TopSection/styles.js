@@ -11,9 +11,11 @@ const useStyles = makeStyles((theme) => ({
     color: theme.app.white,
     lineHeight: 1.6,
     fontFamily: '"Gabriela", serif',
+    width: "80%",
+    margin: "2rem 0",
   },
   title: {
-    fontSize: "3rem",
+    fontSize: "2.4rem",
     fontWeight: "600",
     letterSpacing: "0.05rem",
   },

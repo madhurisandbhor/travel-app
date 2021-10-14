@@ -34,11 +34,11 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
   },
   drawer: {
-    width: drawerWidth,
+    width: "30rem",
     flexShrink: 0,
   },
   drawerPaper: {
-    width: drawerWidth,
+    width: "30rem",
   },
   drawerHeader: {
     display: "flex",
@@ -58,8 +58,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-
-const drawerWidth = 300;
 
 const ItineraryDrawer = ({
   open,
