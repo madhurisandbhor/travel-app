@@ -19,7 +19,7 @@ function App() {
       <MuiThemeProvider theme={theme}>
         <ThemeProvider theme={theme}>
           <InfoProvider>
-            <Router>
+            <Router basename={process.env.PUBLIC_URL}>
               <div className="app">
                 <AppHeader />
                 <main className="app-body">

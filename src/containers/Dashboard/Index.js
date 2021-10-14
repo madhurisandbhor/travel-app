@@ -70,7 +70,7 @@ const Dashboard = () => {
           if (
             image.includes("/") &&
             image
-              .split("/")[3]
+              .split("/")[4]
               .toString()
               .toLowerCase()
               .includes(continent.name.toLowerCase())
@@ -96,7 +96,7 @@ const Dashboard = () => {
                 key={continent.id}
                 onClick={(event) => getContinentInfo(continent, event)}
               >
-                <img src={continent.img} alt={continent.name} loading="lazy" />
+                <img src={continent.img} alt={continent.name} />
                 <div className={classes.name}>{continent.name}</div>
                 <div className={classes.content}></div>
               </Card>
