@@ -8,11 +8,11 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    color: theme.app.white,
+    color: theme.app.black,
     lineHeight: 1.6,
     fontFamily: '"Gabriela", serif',
     width: "80%",
-    margin: "2rem 0",
+    margin: "3rem 0",
   },
   title: {
     fontSize: "2.4rem",
