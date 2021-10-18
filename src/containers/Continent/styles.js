@@ -44,6 +44,12 @@ export const MapSection = styled.div`
   flex-direction: column;
   align-items: center;
   & > p {
+    display: flex;
+    align-items: center;
+    & > img {
+      width: 2.4rem;
+      height: 2.4rem;
+    }
     font-size: 1.4rem;
     margin: 1rem;
   }

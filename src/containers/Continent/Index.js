@@ -7,6 +7,7 @@ import SelectMenuCities from "./SelectMenuCities";
 import Wrapper from "./styles";
 import ContinentInfoSection from "./Cards/ContinentInfoSection";
 import MapContainer from "./Map";
+import LocationIcon from "images/location.svg";
 import { Container, MapSection, Info, InfoText } from "./styles";
 
 const Continent = () => {
@@ -100,7 +101,8 @@ const Continent = () => {
           {countries.length > 0 && (
             <MapSection>
               <p>
-                Click the blue marker on map to add city to your travel plan.
+                <img src={LocationIcon} alt="location Note" /> Click the blue
+                marker on map to add city to your travel plan.
               </p>
               <MapContainer
                 countries={countries}
