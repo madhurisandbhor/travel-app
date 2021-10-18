@@ -1,103 +1,162 @@
-import React, { useState, useEffect, useCallback, useContext } from 'react'
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
-import PropTypes from 'prop-types';
-import MapInfoWindow from './MapInfoWindow';
-import { InfoContext } from 'app/InfoContext';
+import React, { useState, useEffect, useCallback, useContext } from "react";
+import L from "leaflet";
+import { TileLayer, Marker } from "react-leaflet";
+import PropTypes from "prop-types";
+import MapInfoWindow from "./MapInfoWindow";
+import { InfoContext } from "app/InfoContext";
+import "leaflet/dist/leaflet.css";
+import { MapRoot } from "./styles";
 
-const API_KEY = process.env.REACT_APP_API_KEY;
+import icon from "leaflet/dist/images/marker-icon.png";
+import iconShadow from "leaflet/dist/images/marker-shadow.png";
 
-const MapContainer = ({ countries, countrySelected, citySelected }) => {
-    const { info } = useContext(InfoContext);
+let DefaultIcon = L.icon({
+  iconSize: [25, 41],
+  iconAnchor: [10, 41],
+  popupAnchor: [2, -40],
+  iconUrl: icon,
+  shadowUrl: iconShadow,
+});
 
-    const [markers, setMarkers] = useState([]);
-    const [selected, setSelected] = useState('');
-    const [zoom, setZoom] = useState(3);
+L.Marker.prototype.options.icon = DefaultIcon;
 
-    const [center, setCenter] = useState({
-        lat: countries[0].location.lat,
-        lng: countries[0].location.long
-    });
+const MapComponent = ({
+  countries,
+  countrySelected,
+  citySelected,
+  markers,
+  setMarkerPosition,
+  zoom,
+  resetZoom,
+}) => {
+  const { info } = useContext(InfoContext);
+  const [selected, setSelected] = useState("");
 
-    useEffect(() => {
-        const selectedLocation = Object.keys(citySelected).length !== 0 ? citySelected : countrySelected;
-        const citiesAddedByUser = info.citiesAddedByUser;
+  const [map, setMap] = useState(null);
 
-        if (Object.keys(citySelected).length !== 0 || Object.keys(countrySelected).length !== 0) {
-            if (Object.keys(citySelected).length !== 0) {
-                setZoom(10); // adjust zoom level for City
-            }
-            else {
-                setZoom(5); // adjust zoom level for Country
-            }
-            setCenter({
-                lat: selectedLocation.location.lat,
-                lng: selectedLocation.location.long
-            })
+  const [center, setCenter] = useState({
+    lat: countries[0].location.lat,
+    lng: countries[0].location.long,
+  });
 
-            const isCityAdded = citiesAddedByUser.some(city => city.name === selectedLocation.name);
+  useEffect(() => {
+    const selectedLocation =
+      Object.keys(citySelected).length !== 0 ? citySelected : countrySelected;
+    const citiesAddedByUser = info.citiesAddedByUser;
 
-            setMarkers([{
-                lat: selectedLocation.location ? selectedLocation.location.lat : 0,
-                lng: selectedLocation.location ? selectedLocation.location.long : 0,
-                id: selectedLocation.id,
-                name: selectedLocation.name,
-                population: selectedLocation.population,
-                locationSelected: isCityAdded,
-            }]);
-        } else {
-            setZoom(3);
-            countries.forEach(item => {
-                const isCityAdded = citiesAddedByUser.some(city => city.name === item.name);
+    if (
+      Object.keys(citySelected).length !== 0 ||
+      Object.keys(countrySelected).length !== 0
+    ) {
+      if (Object.keys(citySelected).length !== 0) {
+        resetZoom(10); // adjust zoom level for City
+      } else {
+        resetZoom(5); // adjust zoom level for Country
+      }
+      setCenter({
+        lat: selectedLocation.location.lat,
+        lng: selectedLocation.location.long,
+      });
 
-                setMarkers(current => [...current, {
-                    lat: item.location ? item.location.lat : 0,
-                    lng: item.location ? item.location.long : 0,
-                    id: item.id,
-                    name: item.name,
-                    population: item.population,
-                    locationSelected: isCityAdded,
-                }]);
-            });
-        }
+      map.setView(
+        {
+          lat: selectedLocation.location.lat,
+          lng: selectedLocation.location.long,
+        },
+        5
+      );
 
-    }, [countries, countrySelected, citySelected, info]);
+      const isCityAdded = citiesAddedByUser.some(
+        (city) => city.name === selectedLocation.name
+      );
 
-    const onMarkerClick = marker => {
-        setSelected(marker);
-    };
+      setMarkerPosition([
+        {
+          lat: selectedLocation.location ? selectedLocation.location.lat : 0,
+          lng: selectedLocation.location ? selectedLocation.location.long : 0,
+          id: selectedLocation.id,
+          name: selectedLocation.name,
+          population: selectedLocation.population,
+          locationSelected: isCityAdded,
+        },
+      ]);
+    } else {
+      resetZoom(3);
+      countries.forEach((item) => {
+        const isCityAdded = citiesAddedByUser.some(
+          (city) => city.name === item.name
+        );
 
-    const onCloseClick = useCallback(() => {
-        setSelected(null);
-    }, []);
+        setMarkerPosition((current) => [
+          ...current,
+          {
+            lat: item.location ? item.location.lat : 0,
+            lng: item.location ? item.location.long : 0,
+            id: item.id,
+            name: item.name,
+            population: item.population,
+            locationSelected: isCityAdded,
+          },
+        ]);
+      });
+    }
+  }, [countries, countrySelected, citySelected, info, map, setMarkerPosition, resetZoom]);
 
-    return (
-        <LoadScript
-            googleMapsApiKey={API_KEY}
+  const onMarkerClick = (marker, e) => {
+    setSelected(marker);
+  };
+
+  const onCloseClick = useCallback(() => {
+    setSelected(null);
+  }, []);
+
+  useEffect(()=>{
+    if(!countrySelected.id && map){
+      map.setView(
+        {
+          lat: countries[0].location.lat,
+          lng: countries[0].location.long,
+        },
+        3
+      );
+    }
+  },[countrySelected, map, countries])
+
+  return (
+    <MapRoot
+      id="map"
+      center={center}
+      zoom={zoom}
+      scrollWheelZoom={false}
+      whenCreated={setMap}
+    >
+      <TileLayer
+        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+      {markers.map((marker) => (
+        <Marker
+          position={{ lat: marker.lat, lng: marker.lng }}
+          eventHandlers={{
+            click: (event) => onMarkerClick(marker, event),
+          }}
+          key={marker.name}
         >
-            <GoogleMap
-                // mapContainerStyle={containerStyle}
-                center={center}
-                zoom={zoom}
-                mapContainerClassName="googleMap"
-            >
-                {markers.map((marker) => (
-                    <Marker
-                        key={marker.id}
-                        position={{ lat: marker.lat, lng: marker.lng }}
-                        onClick={(event) => onMarkerClick(marker, event)}
-                    />
-                ))}
+          <MapInfoWindow selected={selected} onCloseClick={onCloseClick} />
+        </Marker>
+      ))}
+    </MapRoot>
+  );
+};
 
-                {selected ? (<MapInfoWindow selected={selected} onCloseClick={onCloseClick} />) : null}
-            </GoogleMap>
-        </LoadScript>
-    )
-}
+MapComponent.propTypes = {
+  countries: PropTypes.array.isRequired,
+  countrySelected: PropTypes.object,
+  citySelected: PropTypes.object,
+  markers: PropTypes.array,
+  setMarkerPosition: PropTypes.func,
+  zoom: PropTypes.number,
+  resetZoom: PropTypes.func,
+};
 
-MapContainer.propTypes = {
-    countries: PropTypes.array.isRequired,
-    countrySelected: PropTypes.object,
-    citySelected: PropTypes.object,
-}
-
-export default React.memo(MapContainer);
+export default React.memo(MapComponent);

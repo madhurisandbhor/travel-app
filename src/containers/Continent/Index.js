@@ -15,6 +15,8 @@ const Continent = () => {
   const continentSelected = info.continentSelected;
   const [countrySelected, setCountrySelected] = useState({});
   const [citySelected, setCitySelected] = useState({});
+  const [markers, setMarkers] = useState([]);
+  const [zoom, setZoom] = useState(3);
 
   const url = "https://api.everbase.co/graphql?apikey=your_key";
   const query = `{
@@ -42,14 +44,32 @@ const Continent = () => {
     }
   }, [data]);
 
-  const onCountrySelect = useCallback((selectedCountry) => {
-    const countrySelected = selectedCountry ? selectedCountry : {};
-    setCountrySelected(countrySelected);
-    setCitySelected({});
+  const resetZoom = useCallback((level) => {
+    setZoom(level);
   }, []);
 
-  const onSetCurrentCity = useCallback((currentCity) => {
-    setCitySelected(currentCity);
+  const onCountrySelect = useCallback(
+    (selectedCountry) => {
+      setMarkers([]);
+      resetZoom(3);
+      const countrySelected = selectedCountry ? selectedCountry : {};
+      setCountrySelected(countrySelected);
+      setCitySelected({});
+    },
+    [resetZoom]
+  );
+
+  const onSetCurrentCity = useCallback(
+    (currentCity) => {
+      setMarkers([]);
+      resetZoom(5);
+      setCitySelected(currentCity);
+    },
+    [resetZoom]
+  );
+
+  const setMarkerPosition = useCallback((position) => {
+    setMarkers(position);
   }, []);
 
   return (
@@ -79,11 +99,17 @@ const Continent = () => {
           </Info>
           {countries.length > 0 && (
             <MapSection>
-              <p>Click the red markers on map to add city to your travel plan.</p>
+              <p>
+                Click the blue marker on map to add city to your travel plan.
+              </p>
               <MapContainer
                 countries={countries}
                 countrySelected={countrySelected}
                 citySelected={citySelected}
+                markers={markers}
+                setMarkerPosition={setMarkerPosition}
+                zoom={zoom}
+                resetZoom={resetZoom}
               />
             </MapSection>
           )}
