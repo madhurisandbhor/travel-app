@@ -25,11 +25,11 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 ## About App
 
-This application is about exploring world travel destinations. All Gerographical information is provided when you select any continent, country or city. You can see all the possible destinations to explore on provided map. Data provided is by https://www.everbase.co/docs/quick-start graphql api.
+This is a demo application about exploring world travel destinations. All Geographical information is provided when you select any continent, country or city. You can see all the possible destinations to explore on provided map. Data provided is by https://www.everbase.co/docs/quick-start graphql api.
 
 Frontend tech: 
 1. React JS with hooks (v17)
 2. Material UI - predefined react components
 3. Styled Components - CSS-in-JS styling framework
-3. @react-google-maps/api for displaying map
+3. react-leaflet library for displaying map
 4. React testing library for Unit tests
