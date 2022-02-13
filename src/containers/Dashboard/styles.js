@@ -71,6 +71,9 @@ const useStyles = makeStyles((theme) => ({
     height: "20%",
     width: "100%",
   },
+  error:{
+    textAlign:'center',
+  },
 }));
 
 export default useStyles;

@@ -86,8 +86,8 @@ const Dashboard = () => {
     <div className={classes.root}>
       <TopSection />
       {isLoading && <LoadingIndicator />}
-      {error && <div>{error}</div>}
-      {!isLoading && (
+      {!isLoading && error && <div className={classes.error}>Everbase server error!</div>}
+      {!isLoading && data && (
         <div className={classes.sliderContainer}>
           {UpdatedcontinentsList.length > 0 &&
             UpdatedcontinentsList.map((continent) => (
