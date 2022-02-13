@@ -73,6 +73,7 @@ const useStyles = makeStyles((theme) => ({
   },
   error:{
     textAlign:'center',
+    color:'#FF0000',
   },
 }));
 
